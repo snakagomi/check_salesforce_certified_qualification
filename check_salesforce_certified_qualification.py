@@ -15,9 +15,9 @@ def main():
     split_block = split_by_linefeed_code(update_date_block)
     update_date = split_by_colon(split_block[2])
     update_date = datetime.strptime(update_date, "%Y年%m月%d日")
+    update_date_month = update_date.month
     current_month = datetime.now().month
-    # if update_date == current_month:
-    if update_date == 6:
+    if update_date_month == current_month:
         CHROME_DRIVER.find_element(By.XPATH,"//*[@id=\"layout\"]/ul[2]/li[7]/a").click()
 
 
