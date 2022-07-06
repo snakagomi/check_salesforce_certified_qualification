@@ -17,8 +17,11 @@ def main():
     update_date = datetime.strptime(update_date, "%Y年%m月%d日")
     update_date_month = update_date.month
     current_month = datetime.now().month
-    if update_date_month == current_month:
-        CHROME_DRIVER.find_element(By.XPATH,"//*[@id=\"layout\"]/ul[2]/li[7]/a").click()
+    is_current_month = check_current_month(update_date_month, current_month)
+    if is_current_month:
+        CHROME_DRIVER.find_element(By.XPATH, "//*[@id=\"layout\"]/ul[2]/li[7]/a").click()
+    else:
+        CHROME_DRIVER.close()
 
 
 def get_update_date_block():
@@ -32,8 +35,16 @@ def split_by_linefeed_code(string):
 
 
 def split_by_colon(string):
-    update_date = re.split(":", string)
-    return update_date[1].replace(' ', '')
+    split_string = re.split(":", string)
+    update_date = split_string[1].replace(' ', '')
+    return update_date
+
+
+def check_current_month(compared_month, comparing_month):
+    if compared_month == comparing_month:
+        return True
+    else:
+        return False
 
 
 # ガター内の緑色のボタンを押すとスクリプトを実行します。
